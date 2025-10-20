@@ -47,6 +47,7 @@ class _CalculadoraS extends State<Calculadora>{
   void add8() => setState(() => textoTela += "8");
   void add9() => setState(() => textoTela += "9");
   void add0() => setState(() => textoTela += "0");
+  void virgula() => setState(() => textoTela += ".");
   
   //funções do header
   void clear(){
@@ -59,6 +60,7 @@ class _CalculadoraS extends State<Calculadora>{
     });
   }
   
+  //Funções dos botões
   void resultado(){
     double numero = double.parse(textoTela);
     if(operacao == "ad"){
@@ -182,14 +184,27 @@ class _CalculadoraS extends State<Calculadora>{
     });
   }
   
+  //Funções dos outros botões
+  void deletar(){
+    setState((){
+      textoTela = textoTela.substring(0, textoTela.length -1);
+    });
+  }
+  
+  void ce(){
+    setState((){
+      textoTela = "";
+    });
+  }
+  
 
   
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: Text("Calculadora")
+        backgroundColor: Colors.green[900],
+        title: Text("Calculadora", style: TextStyle(color: Colors.white))
       ),
       body: SafeArea(
         child: Column(
@@ -211,14 +226,14 @@ class _CalculadoraS extends State<Calculadora>{
                           cor: Colors.indigo
                         ),
                         BtnHeader(
-                          funcao: (){},
+                          funcao: () => ce,
                           texto: "CE",
                           cor: Colors.indigo
                         ),
                         BtnHeader(
-                          funcao: (){},
-                          texto: "Del",
-                          cor: Colors.red
+                          funcao: () => deletar,
+                          texto: "⇐",
+                          cor: Colors.indigo
                         ),
                       ]
                     ),
@@ -286,7 +301,7 @@ class _CalculadoraS extends State<Calculadora>{
                           texto: "0"
                         ),
                         BtnNumero(
-                          funcao: () {},
+                          funcao: () => virgula,
                           texto: ",",
                           cor: Colors.indigo
                         ),
@@ -305,19 +320,23 @@ class _CalculadoraS extends State<Calculadora>{
                     ),
                     BtnNumero(
                       funcao: () => divisao,
-                      texto: "÷"
+                      texto: "÷",
+                      cor: Colors.purple[900]!
                     ),
                     BtnNumero(
                       funcao: () => multiplicacao,
-                      texto: "x"
+                      texto: "x",
+                      cor: Colors.purple[900]!
                     ),
                     BtnNumero(
                       funcao: () => subtracao,
-                      texto: "-"
+                      texto: "-",
+                      cor: Colors.purple[900]!
                     ),
                     BtnNumero(
                       funcao: () => adicao,
-                      texto: "+"
+                      texto: "+",
+                      cor: Colors.purple[900]!
                     ),
                   ]
                 )
