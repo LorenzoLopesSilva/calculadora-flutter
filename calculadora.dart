@@ -31,6 +31,7 @@ class _CalculadoraS extends State<Calculadora>{
   double _result = 0;
   bool isFirst = true;
   String operacao = "";
+  String sinal = "";
 
   
   
@@ -61,7 +62,12 @@ class _CalculadoraS extends State<Calculadora>{
   void resultado(){
     double numero = double.parse(textoTela);
     if(operacao == "ad"){
-      _result += numero;
+      if(isFirst){
+        _result = numero;
+      }
+      else{
+        _result += numero;
+      }
     }
     
     else if(operacao == "sub"){
@@ -93,18 +99,21 @@ class _CalculadoraS extends State<Calculadora>{
 
     textoTela = "";
     setState((){
-      textoCalculo = "$_result";
+      textoCalculo = "$_result $sinal";
     });
   }
   
   void adicao(){
       if(isFirst){
         operacao = "ad";
+        sinal = "+";
         resultado();
       }
       else{
+        sinal = "+";
         resultado();
         operacao = "ad";
+        
       }
 
       setState((){
@@ -115,11 +124,14 @@ class _CalculadoraS extends State<Calculadora>{
       print("$isFirst");
       if(isFirst){
         operacao = "sub";
+        sinal = "-";
         resultado();
       }
       else{
+        sinal = "-";
         resultado();
         operacao = "sub";
+        
       }
 
       setState((){
@@ -130,9 +142,11 @@ class _CalculadoraS extends State<Calculadora>{
       print("$isFirst");
       if(isFirst){
         operacao = "mult";
+        sinal = "×";
         resultado();
       }
       else{
+        sinal = "×";
         resultado();
         operacao = "mult";
       }
@@ -145,9 +159,11 @@ class _CalculadoraS extends State<Calculadora>{
       print("$isFirst");
       if(isFirst){
         operacao = "divi";
+        sinal = "÷";
         resultado();
       }
       else{
+        sinal = "÷";
         resultado();
         operacao = "divi";
       }
@@ -159,6 +175,7 @@ class _CalculadoraS extends State<Calculadora>{
   
   void finalizar(){
     resultado();
+    isFirst = true;
     setState((){
       textoCalculo = "";
       textoTela = "$_result";
