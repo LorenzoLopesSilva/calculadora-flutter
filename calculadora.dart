@@ -28,6 +28,9 @@ class _CalculadoraS extends State<Calculadora>{
   String textoTela = "";
   String textoCalculo = "Teste";
   List numeros = [];
+  double _result = 0;
+  bool isFirst = true;
+  String operacao = "";
 
   
   
@@ -47,31 +50,122 @@ class _CalculadoraS extends State<Calculadora>{
   //funções do header
   void clear(){
     numeros.clear();
+    isFirst = true;
     setState(() {
       textoTela = "";
       textoCalculo = "";
+      _result = 0;
     });
   }
   
-  
-  void realizar(){
-    double _resultado = 0;
+  void resultado(){
     double numero = double.parse(textoTela);
-    numeros.add(numero);
-    for(var i in numeros){
-      _resultado += i;
+    if(operacao == "ad"){
+      _result += numero;
     }
-    numeros.clear();
-    setState(() => textoTela = "$_resultado");
+    
+    else if(operacao == "sub"){
+      if(isFirst){
+        _result = numero;
+      }
+      else{
+        _result -= numero;
+      }
+    }
+    
+    else if(operacao == "mult"){
+      if(isFirst){
+        _result = numero;
+      }
+      else{
+        _result *= numero;
+      }
+    }
+    else if(operacao == "divi"){
+      if(isFirst){
+        _result = numero;
+      }
+      else{
+        _result /= numero;
+      }
+    }
+    isFirst = false;
+
+    textoTela = "";
+    setState((){
+      textoCalculo = "$_result";
+    });
   }
   
   void adicao(){
-    if(textoTela != ""){
-      double numero = double.parse(textoTela);
-      textoTela = "";
-      numeros.add(numero);
-    }
+      if(isFirst){
+        operacao = "ad";
+        resultado();
+      }
+      else{
+        resultado();
+        operacao = "ad";
+      }
+
+      setState((){
+        textoTela = "";
+      });
   }
+  void subtracao(){
+      print("$isFirst");
+      if(isFirst){
+        operacao = "sub";
+        resultado();
+      }
+      else{
+        resultado();
+        operacao = "sub";
+      }
+
+      setState((){
+        textoTela = "";
+      });
+  }
+  void multiplicacao(){
+      print("$isFirst");
+      if(isFirst){
+        operacao = "mult";
+        resultado();
+      }
+      else{
+        resultado();
+        operacao = "mult";
+      }
+
+      setState((){
+        textoTela = "";
+      });
+  }
+  void divisao(){
+      print("$isFirst");
+      if(isFirst){
+        operacao = "divi";
+        resultado();
+      }
+      else{
+        resultado();
+        operacao = "divi";
+      }
+
+      setState((){
+        textoTela = "";
+      });
+  }
+  
+  void finalizar(){
+    resultado();
+    setState((){
+      textoCalculo = "";
+      textoTela = "$_result";
+    });
+  }
+  
+
   
   @override
   Widget build(BuildContext context){
@@ -188,20 +282,20 @@ class _CalculadoraS extends State<Calculadora>{
                 Column(
                   children: [
                     BtnHeader(
-                      funcao: () => realizar,
+                      funcao: () => finalizar,
                       texto: "=",
                       cor: Colors.green
                     ),
                     BtnNumero(
-                      funcao: (){},
+                      funcao: () => divisao,
                       texto: "÷"
                     ),
                     BtnNumero(
-                      funcao: (){},
+                      funcao: () => multiplicacao,
                       texto: "x"
                     ),
                     BtnNumero(
-                      funcao: (){},
+                      funcao: () => subtracao,
                       texto: "-"
                     ),
                     BtnNumero(
