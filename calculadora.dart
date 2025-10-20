@@ -26,7 +26,7 @@ class Calculadora extends StatefulWidget{
 
 class _CalculadoraS extends State<Calculadora>{
   String textoTela = "";
-  String textoCalculo = "Teste";
+  String textoCalculo = "";
   List numeros = [];
   double _result = 0;
   bool isFirst = true;
@@ -214,11 +214,14 @@ class _CalculadoraS extends State<Calculadora>{
               textoCalculo: textoCalculo
             ),
             Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   children: [
-                     Row(
+                      Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         BtnHeader(
                           funcao: () => clear,
@@ -237,6 +240,7 @@ class _CalculadoraS extends State<Calculadora>{
                         ),
                       ]
                     ),
+                     
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -410,8 +414,8 @@ class BtnNumero extends StatelessWidget{
       child: Container(
         margin: EdgeInsets.all(10),
         alignment: Alignment.center,
-        height: size,
-        width: size,
+        height: MediaQuery.of(context).size.width * 0.18,
+        width: MediaQuery.of(context).size.width * 0.18,
         decoration: BoxDecoration(
           color: cor,
           borderRadius: BorderRadius.circular(size * 0.1)
@@ -444,11 +448,13 @@ class BtnHeader extends StatelessWidget{
   Widget build(BuildContext context){
     return GestureDetector(
       onTap: funcao(),
-      child: Container(
+      child: Expanded(
+        flex: 1,
+        child: Container(
         margin: EdgeInsets.all(10),
         alignment: Alignment.center,
         height: size * 0.5,
-        width: size,
+        width: MediaQuery.of(context).size.width * 0.18,
         decoration: BoxDecoration(
           color: cor,
           borderRadius: BorderRadius.circular(size * 0.1)
@@ -458,6 +464,8 @@ class BtnHeader extends StatelessWidget{
           style: TextStyle(color: Colors.white)
         )
       )
+      ),
+      
     );
   }
 }
